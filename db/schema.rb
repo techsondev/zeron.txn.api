@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130721192522) do
+ActiveRecord::Schema.define(version: 20130721203309) do
 
   create_table "activities", force: true do |t|
     t.decimal  "amount",     precision: 8, scale: 2
     t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "reverse"
   end
 
 end
