@@ -16,4 +16,19 @@
 # Using secret_token for rails3 compatibility. Change to secret_key_base
 # to avoid deprecation warning.
 # Can be safely removed in a rails3 api-only application.
-ZeronTxnApi::Application.config.secret_token = 'aab95f22d7a979e7065279deeef371a2813b9ef9b2aaa8c7d3e2b1276303307167774f00a3d9f127b36c8f837950b4e9099d6f23bde72aa0db6d884b2fcf3c5b'
+require 'securerandom'
+
+def secure_token
+	token_file = Rails.root.join('.secret')
+	if File.exists?(token_file)
+		#use the existing token.
+		File.read(token_file).chomp
+	else
+		#Generate a new token and store it in token_file.
+		token = SecureRandom.hex(64)
+		File.write(token_file, token)
+		token
+	end
+end
+
+ZeronTxnApi::Application.config.secret_token = secure_token
